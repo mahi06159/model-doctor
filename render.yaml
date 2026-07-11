@@ -103,9 +103,9 @@ services:
   # 3. React Frontend Static Site
   - type: web
     name: modeldoctor-frontend
-    env: static
+    runtime: static
     buildCommand: npm install && npm run build
-    publishDir: dist
+    staticPublishPath: dist
     plan: free
     envVars:
       - key: VITE_API_URL
@@ -114,13 +114,15 @@ services:
           name: modeldoctor-backend
           property: url
 
+  # 5. Redis Cache / Broker
+  - type: keyvalue
+    name: modeldoctor-redis
+    plan: free
+    ipAllowList: [] # only allow internal connections
+
 # 4. Databases
 databases:
   - name: modeldoctor-db
     plan: free
 
-# 5. Redis Cache / Broker
-redis:
-  - name: modeldoctor-redis
-    plan: free
-    ipAllowList: [] # only allow internal connections
+
