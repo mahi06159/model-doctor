@@ -84,6 +84,7 @@ services:
   - type: web
     name: modeldoctor-frontend
     runtime: static
+    rootDir: frontend
     buildCommand: npm install && npm run build
     staticPublishPath: dist
     envVars:
