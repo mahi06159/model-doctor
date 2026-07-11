@@ -21,6 +21,10 @@ services:
         value: dpg-d97rcgu7r5hc73d9p2v0-a.singapore-postgres.render.com
       - key: POSTGRES_PORT
         value: "5432"
+      - key: CELERY_TASK_ALWAYS_EAGER
+        value: "True"
+      - key: CELERY_TASK_EAGER_PROPAGATES
+        value: "True"
       - key: REDIS_URL
         fromService:
           type: redis
@@ -43,42 +47,6 @@ services:
           envVarKey: RENDER_EXTERNAL_URL
     dockerCommand: sh start.sh
 
-  # 2. Celery Asynchronous Audit Worker
-  - type: worker
-    name: modeldoctor-worker
-    env: docker
-    dockerfilePath: backend/Dockerfile
-    dockerContext: backend
-    plan: free
-    envVars:
-      - key: DEBUG
-        value: "False"
-      - key: SECRET_KEY
-        fromService:
-          type: web
-          name: modeldoctor-backend
-          envVarKey: SECRET_KEY
-      - key: POSTGRES_DB
-        value: modeldoctor
-      - key: POSTGRES_USER
-        value: mahi_store_db_user
-      - key: POSTGRES_PASSWORD
-        value: KPvK339bVwiahgbt8KEGgJHHEOzgsImV
-      - key: POSTGRES_HOST
-        value: dpg-d97rcgu7r5hc73d9p2v0-a.singapore-postgres.render.com
-      - key: POSTGRES_PORT
-        value: "5432"
-      - key: CELERY_BROKER_URL
-        fromService:
-          type: redis
-          name: modeldoctor-redis
-          property: connectionString
-      - key: CELERY_RESULT_BACKEND
-        fromService:
-          type: redis
-          name: modeldoctor-redis
-          property: connectionString
-    dockerCommand: celery -A config worker --loglevel=info
 
   # 3. React Frontend Static Site
   - type: web

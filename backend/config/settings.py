@@ -182,6 +182,11 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'UTC'
 
+# Run tasks synchronously (no separate worker process) — needed since
+# Render's free tier doesn't support background worker services.
+CELERY_TASK_ALWAYS_EAGER = env.bool('CELERY_TASK_ALWAYS_EAGER', default=False)
+CELERY_TASK_EAGER_PROPAGATES = env.bool('CELERY_TASK_EAGER_PROPAGATES', default=False)
+
 # LLM Integration (Google Gemini)
 # Set this in .env to enable AI-generated executive summaries in audit reports.
 # Obtain a free key at: https://aistudio.google.com
