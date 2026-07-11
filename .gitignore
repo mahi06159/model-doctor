@@ -1,0 +1,32 @@
+# Environment variables
+.env
+
+# Dependencies
+node_modules/
+
+# Python caching
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Static files and builds
+/backend/staticfiles/
+/frontend/dist/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Virtual environments
+.venv/
+venv/
+backend/.venv/
+backend/venv/
+
+# Sample reports
+*.docx
+*.pdf

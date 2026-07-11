@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #1A1220;
+    color: #F1F5F9;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+  }
+}
+
+/* Custom premium design system details */
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Glassmorphism */
+.glass-panel {
+  background: rgba(42, 31, 48, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(244, 114, 182, 0.08);
+}
+
+.glass-panel-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-panel-hover:hover {
+  background: rgba(42, 31, 48, 0.8);
+  border-color: rgba(244, 114, 182, 0.2);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7), 0 0 20px 0 rgba(244, 114, 182, 0.05);
+  transform: translateY(-2px);
+}
+
+/* Pulse glow for dashboard status indicators */
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.6;
+    box-shadow: 0 0 10px rgba(244, 114, 182, 0.2);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 20px rgba(244, 114, 182, 0.6);
+  }
+}
+
+.glow-active {
+  animation: pulse-glow 2s infinite;
+}
+
+/* Custom scrollbar for dark panels */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(26, 18, 32, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(244, 114, 182, 0.15);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(244, 114, 182, 0.25);
+}

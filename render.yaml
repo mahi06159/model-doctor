@@ -1,0 +1,126 @@
+services:
+  # 1. Django API Backend
+  - type: web
+    name: modeldoctor-backend
+    env: docker
+    dockerfilePath: backend/Dockerfile
+    dockerContext: backend
+    plan: free
+    envVars:
+      - key: DEBUG
+        value: "False"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: POSTGRES_DB
+        fromDatabase:
+          name: modeldoctor-db
+          property: database
+      - key: POSTGRES_USER
+        fromDatabase:
+          name: modeldoctor-db
+          property: user
+      - key: POSTGRES_PASSWORD
+        fromDatabase:
+          name: modeldoctor-db
+          property: password
+      - key: POSTGRES_HOST
+        fromDatabase:
+          name: modeldoctor-db
+          property: host
+      - key: POSTGRES_PORT
+        fromDatabase:
+          name: modeldoctor-db
+          property: port
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: modeldoctor-redis
+          property: connectionString
+      - key: CELERY_BROKER_URL
+        fromService:
+          type: redis
+          name: modeldoctor-redis
+          property: connectionString
+      - key: CELERY_RESULT_BACKEND
+        fromService:
+          type: redis
+          name: modeldoctor-redis
+          property: connectionString
+      - key: CORS_ALLOWED_ORIGINS
+        fromService:
+          type: web
+          name: modeldoctor-frontend
+          property: url
+    startCommand: python manage.py migrate && gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
+
+  # 2. Celery Asynchronous Audit Worker
+  - type: worker
+    name: modeldoctor-worker
+    env: docker
+    dockerfilePath: backend/Dockerfile
+    dockerContext: backend
+    plan: free
+    envVars:
+      - key: DEBUG
+        value: "False"
+      - key: SECRET_KEY
+        fromService:
+          type: web
+          name: modeldoctor-backend
+          property: envVar:SECRET_KEY
+      - key: POSTGRES_DB
+        fromDatabase:
+          name: modeldoctor-db
+          property: database
+      - key: POSTGRES_USER
+        fromDatabase:
+          name: modeldoctor-db
+          property: user
+      - key: POSTGRES_PASSWORD
+        fromDatabase:
+          name: modeldoctor-db
+          property: password
+      - key: POSTGRES_HOST
+        fromDatabase:
+          name: modeldoctor-db
+          property: host
+      - key: POSTGRES_PORT
+        fromDatabase:
+          name: modeldoctor-db
+          property: port
+      - key: CELERY_BROKER_URL
+        fromService:
+          type: redis
+          name: modeldoctor-redis
+          property: connectionString
+      - key: CELERY_RESULT_BACKEND
+        fromService:
+          type: redis
+          name: modeldoctor-redis
+          property: connectionString
+    startCommand: celery -A config worker --loglevel=info
+
+  # 3. React Frontend Static Site
+  - type: web
+    name: modeldoctor-frontend
+    env: static
+    buildCommand: npm install && npm run build
+    publishDir: dist
+    plan: free
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: modeldoctor-backend
+          property: url
+
+# 4. Databases
+databases:
+  - name: modeldoctor-db
+    plan: free
+
+# 5. Redis Cache / Broker
+redis:
+  - name: modeldoctor-redis
+    plan: free
+    ipAllowList: [] # only allow internal connections
