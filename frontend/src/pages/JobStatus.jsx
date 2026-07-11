@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { apiUrl } from '../lib/api';
 import {
   ShieldAlert, Loader2, AlertCircle, CheckCircle,
   Database, RefreshCw, User, Info, FileSpreadsheet, ArrowLeft,
@@ -32,7 +33,7 @@ const JobStatus = () => {
 
     const token = localStorage.getItem('access_token');
     try {
-      const response = await fetch(`/api/audits/${id}/upload-production/`, {
+      const response = await fetch(apiUrl(`/api/audits/${id}/upload-production/`), {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -76,7 +77,7 @@ const JobStatus = () => {
     }
 
     try {
-      const response = await fetch(url, { headers });
+      const response = await fetch(apiUrl(url), { headers });
 
       if (response.ok) {
         const data = await response.json();
@@ -251,7 +252,7 @@ const JobStatus = () => {
                     headers['Authorization'] = `Bearer ${token}`;
                   }
                   try {
-                    const resp = await fetch(url, { headers });
+                    const resp = await fetch(apiUrl(url), { headers });
                     if (!resp.ok) {
                       const errData = await resp.json().catch(() => ({}));
                       alert(errData.error || 'Failed to download report.');
@@ -286,7 +287,7 @@ const JobStatus = () => {
                     headers['Authorization'] = `Bearer ${token}`;
                   }
                   try {
-                    const resp = await fetch(url, { headers });
+                    const resp = await fetch(apiUrl(url), { headers });
                     if (!resp.ok) {
                       const errData = await resp.json().catch(() => ({}));
                       alert(errData.error || 'Failed to download report.');

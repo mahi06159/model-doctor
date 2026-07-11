@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { apiUrl } from '../lib/api';
 import {
   ShieldAlert, Activity, Cpu, LogOut, Plus,
   CheckCircle, Clock, Database,
@@ -219,7 +220,7 @@ const Dashboard = () => {
 
     try {
       // Unconditionally fetch demo jobs so they're accessible to everyone
-      const demoResp = await fetch('/api/demo-audits/');
+      const demoResp = await fetch(apiUrl('/api/demo-audits/'));
       if (demoResp.ok) {
         const dJobs = await demoResp.json();
         setDemoJobs(dJobs);
@@ -228,15 +229,15 @@ const Dashboard = () => {
       if (isDemoMode) {
         setUserData({ username: 'Demo Visitor', email: 'demo@modeldoctor.local' });
         // Under demo mode, recentJobs are simply the pre-computed demo audits
-        const demoResp2 = await fetch('/api/demo-audits/');
+        const demoResp2 = await fetch(apiUrl('/api/demo-audits/'));
         if (demoResp2.ok) {
           const jobs = await demoResp2.json();
           setRecentJobs(jobs);
         }
       } else {
         const [healthResp, auditsResp] = await Promise.all([
-          fetch('/api/health-check/', { headers: { Authorization: `Bearer ${token}` } }),
-          fetch('/api/audits/', { headers: { Authorization: `Bearer ${token}` } }),
+          fetch(apiUrl('/api/health-check/'), { headers: { Authorization: `Bearer ${token}` } }),
+          fetch(apiUrl('/api/audits/'), { headers: { Authorization: `Bearer ${token}` } }),
         ]);
 
         if (healthResp.status === 401) { handleLogout(); return; }
@@ -274,7 +275,7 @@ const Dashboard = () => {
     }
 
     try {
-      const resp = await fetch(`/api/audits/${jobId}/report/?filetype=${format}`, { headers });
+      const resp = await fetch(apiUrl(`/api/audits/${jobId}/report/?filetype=${format}`), { headers });
       if (!resp.ok) {
         const errData = await resp.json().catch(() => ({}));
         alert(errData.error || 'Failed to download report.');
