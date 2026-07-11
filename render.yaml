@@ -12,25 +12,15 @@ services:
       - key: SECRET_KEY
         generateValue: true
       - key: POSTGRES_DB
-        fromDatabase:
-          name: modeldoctor-db
-          property: database
+        value: modeldoctor
       - key: POSTGRES_USER
-        fromDatabase:
-          name: modeldoctor-db
-          property: user
+        value: mahi_store_db_user
       - key: POSTGRES_PASSWORD
-        fromDatabase:
-          name: modeldoctor-db
-          property: password
+        value: KPvK339bVwiahgbt8KEGgJHHEOzgsImV
       - key: POSTGRES_HOST
-        fromDatabase:
-          name: modeldoctor-db
-          property: host
+        value: dpg-d97rcgu7r5hc73d9p2v0-a
       - key: POSTGRES_PORT
-        fromDatabase:
-          name: modeldoctor-db
-          property: port
+        value: "5432"
       - key: REDIS_URL
         fromService:
           type: redis
@@ -69,25 +59,15 @@ services:
           name: modeldoctor-backend
           envVarKey: SECRET_KEY
       - key: POSTGRES_DB
-        fromDatabase:
-          name: modeldoctor-db
-          property: database
+        value: modeldoctor
       - key: POSTGRES_USER
-        fromDatabase:
-          name: modeldoctor-db
-          property: user
+        value: mahi_store_db_user
       - key: POSTGRES_PASSWORD
-        fromDatabase:
-          name: modeldoctor-db
-          property: password
+        value: KPvK339bVwiahgbt8KEGgJHHEOzgsImV
       - key: POSTGRES_HOST
-        fromDatabase:
-          name: modeldoctor-db
-          property: host
+        value: dpg-d97rcgu7r5hc73d9p2v0-a
       - key: POSTGRES_PORT
-        fromDatabase:
-          name: modeldoctor-db
-          property: port
+        value: "5432"
       - key: CELERY_BROKER_URL
         fromService:
           type: redis
@@ -118,10 +98,5 @@ services:
     name: modeldoctor-redis
     plan: free
     ipAllowList: [] # only allow internal connections
-
-# 4. Databases
-databases:
-  - name: modeldoctor-db
-    plan: free
 
 
