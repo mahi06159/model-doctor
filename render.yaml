@@ -2,6 +2,7 @@ services:
   # 1. Django API Backend
   - type: web
     name: modeldoctor-backend
+    region: singapore
     env: docker
     dockerfilePath: backend/Dockerfile
     dockerContext: backend
@@ -46,6 +47,7 @@ services:
   # 2. Celery Asynchronous Audit Worker
   - type: worker
     name: modeldoctor-worker
+    region: singapore
     env: docker
     dockerfilePath: backend/Dockerfile
     dockerContext: backend
@@ -97,6 +99,7 @@ services:
   # 5. Redis Cache / Broker
   - type: keyvalue
     name: modeldoctor-redis
+    region: singapore
     plan: free
     ipAllowList: [] # only allow internal connections
 
