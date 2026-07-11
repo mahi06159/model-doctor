@@ -50,8 +50,8 @@ services:
         fromService:
           type: web
           name: modeldoctor-frontend
-          property: url
-    startCommand: python manage.py migrate && gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
+          envVarKey: RENDER_EXTERNAL_URL
+    dockerCommand: python manage.py migrate && gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
 
   # 2. Celery Asynchronous Audit Worker
   - type: worker
@@ -67,7 +67,7 @@ services:
         fromService:
           type: web
           name: modeldoctor-backend
-          property: envVar:SECRET_KEY
+          envVarKey: SECRET_KEY
       - key: POSTGRES_DB
         fromDatabase:
           name: modeldoctor-db
@@ -98,7 +98,7 @@ services:
           type: redis
           name: modeldoctor-redis
           property: connectionString
-    startCommand: celery -A config worker --loglevel=info
+    dockerCommand: celery -A config worker --loglevel=info
 
   # 3. React Frontend Static Site
   - type: web
@@ -112,7 +112,7 @@ services:
         fromService:
           type: web
           name: modeldoctor-backend
-          property: url
+          envVarKey: RENDER_EXTERNAL_URL
 
   # 5. Redis Cache / Broker
   - type: keyvalue
