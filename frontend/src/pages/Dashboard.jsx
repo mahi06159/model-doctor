@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   ShieldAlert, Activity, Cpu, LogOut, Plus,
-  CheckCircle, AlertTriangle, Clock, Database,
+  CheckCircle, Clock, Database,
   RefreshCw, ChevronRight, FileText, TrendingUp,
   Zap, Shield, BarChart2, AlertCircle, Download, Info
 } from 'lucide-react';
@@ -105,7 +105,7 @@ const GaugeChart = ({ score, grade }) => {
 // ---------------------------------------------------------------------------
 // Module card — shows per-module sub-penalty from health score
 // ---------------------------------------------------------------------------
-const ModuleCard = ({ icon: Icon, title, penalty, weight, tab, jobId, color, description }) => {
+const ModuleCard = ({ icon: Icon, title, penalty, weight, jobId, color, description }) => {
   const navigate = useNavigate();
   const weightedPenalty = penalty * weight;
   const barPct = Math.min(100, penalty);
@@ -196,6 +196,7 @@ const Dashboard = () => {
   const [recentJobs, setRecentJobs] = useState([]);
   const [demoJobs, setDemoJobs] = useState([]);
   const [loading, setLoading] = useState(true);
+  // eslint-disable-next-line no-unused-vars
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
   const isDemoMode = localStorage.getItem('is_demo_mode') === 'true';
@@ -206,6 +207,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchData = async () => {
@@ -407,7 +409,7 @@ const Dashboard = () => {
             <Info className="w-5 h-5 text-violet-400 shrink-0 mt-0.5" />
             <div>
               <span className="font-bold text-white block mb-0.5">Demo Sandbox Mode Active</span>
-              You are exploring ModelDoctor's capabilities with pre-computed diagnostic audits (Target Leakage, Calibration, and Gender Bias).
+              You are exploring ModelDoctor&apos;s capabilities with pre-computed diagnostic audits (Target Leakage, Calibration, and Gender Bias).
               To perform a live audit with your own model file and evaluation dataset, click the <strong>Sign In for Live Audits</strong> button in the header.
             </div>
           </div>

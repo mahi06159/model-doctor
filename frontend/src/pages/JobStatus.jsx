@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   ShieldAlert, Loader2, AlertCircle, CheckCircle,
-  Database, RefreshCw, BarChart3, HelpCircle, User, Info, FileSpreadsheet, ArrowLeft,
+  Database, RefreshCw, User, Info, FileSpreadsheet, ArrowLeft,
   ChevronDown, ChevronUp, AlertTriangle, TrendingUp, Sparkles, Scale, Activity, Download, Upload, Shield
 } from 'lucide-react';
 import { ResponsiveContainer, BarChart, Bar, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, Legend } from 'recharts';
@@ -63,7 +63,7 @@ const JobStatus = () => {
     }, 2000);
 
     return () => clearInterval(interval);
-  }, [id]);
+  }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchJobDetails = async () => {
     const isDemo = String(id).startsWith('demo-');
@@ -801,7 +801,7 @@ const JobStatus = () => {
                         <h3 className="text-sm font-bold">Interview Focus: Diagnostics</h3>
                       </div>
                       <p className="text-xs text-slate-300 leading-relaxed">
-                        In ML engineering interviews, you are often asked: <strong>"Why not use Pearson correlation coefficients to detect target leakage?"</strong>
+                        In ML engineering interviews, you are often asked: <strong>&quot;Why not use Pearson correlation coefficients to detect target leakage?&quot;</strong>
                       </p>
                       <p className="text-[11px] text-slate-400 leading-relaxed">
                         Correlation fails on 3 critical vectors: non-linear transformations (e.g. hashed leakage values or mathematical boundaries), multi-feature combinatorial leakage interactions, and true model integration context.
@@ -822,10 +822,10 @@ const JobStatus = () => {
                   <div className="glass-panel rounded-xl p-5 border border-rose-500/20 bg-rose-500/[0.01] animate-fade-in space-y-3">
                     <h4 className="text-xs font-bold text-rose-400 uppercase tracking-wider">Interview Question: Why Model-in-the-Loop diagnostics beats Correlation</h4>
                     <p className="text-xs text-slate-300 leading-relaxed">
-                      "While Pearson correlation is useful for finding simple collinearity, it fails to identify target leaks in complex settings.
+                      &quot;While Pearson correlation is useful for finding simple collinearity, it fails to identify target leaks in complex settings.
                       First, correlation assumes a linear relationship. If a feature contains leaked target information passed through a non-linear function (e.g. integer bounds, logs, conditional hashes, or time differences), correlation can be near zero.
                       Second, correlation is computed feature-by-feature. It completely misses interactive leaks where two features must combine to leak the target.
-                      Third, correlation ignores the actual model. Our algorithm clones the model and retrains it, computing SHAP values directly. This captures whether the model actually leverages the leak to predict, providing a direct diagnostic of predictive risk."
+                      Third, correlation ignores the actual model. Our algorithm clones the model and retrains it, computing SHAP values directly. This captures whether the model actually leverages the leak to predict, providing a direct diagnostic of predictive risk.&quot;
                     </p>
                   </div>
                 )}
@@ -902,7 +902,7 @@ const JobStatus = () => {
                                       <span className="text-emerald-400 font-medium">Valid Visibility</span>
                                     )}
                                   </div>
-                                  <p className="text-[9.5px] text-slate-400 mt-1">Triggers if marked 'unknown at prediction time' but has non-trivial importance.</p>
+                                  <p className="text-[9.5px] text-slate-400 mt-1">Triggers if marked &apos;unknown at prediction time&apos; but has non-trivial importance.</p>
                                 </div>
                               </div>
 
@@ -1016,7 +1016,7 @@ const JobStatus = () => {
                             A model is calibrated when its predicted probabilities match empirical outcomes. For example, if a model assigns a probability of 0.8 to a set of predictions, 80% of those samples should actually belong to the positive class.
                           </p>
                           <p className="leading-relaxed">
-                            <strong>Under-confidence:</strong> Curve lies above the diagonal. The model's predictions are less extreme than the actual probabilities.
+                            <strong>Under-confidence:</strong> Curve lies above the diagonal. The model&apos;s predictions are less extreme than the actual probabilities.
                           </p>
                           <p className="leading-relaxed">
                             <strong>Over-confidence:</strong> Curve lies below the diagonal. The model predicts high probability values but actual conversion rates are much lower.
@@ -1058,7 +1058,7 @@ const JobStatus = () => {
 
                     <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-200 leading-relaxed">
                       <h4 className="font-bold mb-1">Normative Trade-offs Caveat</h4>
-                      Fairness evaluation metrics involve inherent social and mathematical trade-offs. For example, enforcing demographic parity can conflict with predictive parity or model accuracy, meaning there is rarely a single "correct" answer. These results should be interpreted as empirical measurements to guide audits rather than strict pass/fail criteria.
+                      Fairness evaluation metrics involve inherent social and mathematical trade-offs. For example, enforcing demographic parity can conflict with predictive parity or model accuracy, meaning there is rarely a single &quot;correct&quot; answer. These results should be interpreted as empirical measurements to guide audits rather than strict pass/fail criteria.
                     </div>
 
                     <div className="glass-panel rounded-xl p-5 border border-slate-800 space-y-4">
@@ -1110,7 +1110,7 @@ const JobStatus = () => {
                         <div className="text-2xl font-black text-white">
                           {job.results.drift.drifted_features_count} / {job.results.drift.total_features}
                         </div>
-                        <p className="text-[9px] text-slate-500 mt-1">Number of features with PSI > 0.2</p>
+                        <p className="text-[9px] text-slate-500 mt-1">Number of features with PSI &gt; 0.2</p>
                       </div>
 
                       <div className="glass-panel rounded-xl p-5 border border-slate-800">
