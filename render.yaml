@@ -19,7 +19,7 @@ services:
       - key: POSTGRES_PASSWORD
         value: KPvK339bVwiahgbt8KEGgJHHEOzgsImV
       - key: POSTGRES_HOST
-        value: dpg-d97rcgu7r5hc73d9p2v0-a
+        value: dpg-d97rcgu7r5hc73d9p2v0-a.singapore-postgres.render.com
       - key: POSTGRES_PORT
         value: "5432"
       - key: REDIS_URL
@@ -67,7 +67,7 @@ services:
       - key: POSTGRES_PASSWORD
         value: KPvK339bVwiahgbt8KEGgJHHEOzgsImV
       - key: POSTGRES_HOST
-        value: dpg-d97rcgu7r5hc73d9p2v0-a
+        value: dpg-d97rcgu7r5hc73d9p2v0-a.singapore-postgres.render.com
       - key: POSTGRES_PORT
         value: "5432"
       - key: CELERY_BROKER_URL

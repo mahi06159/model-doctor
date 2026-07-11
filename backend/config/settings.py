@@ -95,6 +95,7 @@ else:
             'PASSWORD': env('POSTGRES_PASSWORD', default='postgres'),
             'HOST': env('POSTGRES_HOST', default='postgres'),
             'PORT': env('POSTGRES_PORT', default='5432'),
+            'OPTIONS': {'sslmode': env('POSTGRES_SSLMODE', default='require')},
         }
     }
 
